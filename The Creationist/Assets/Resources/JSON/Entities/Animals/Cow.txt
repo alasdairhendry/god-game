@@ -1,0 +1,17 @@
+{
+	"name": "Cow",
+	"entityDataID":0,
+	"infantName":"Calf",
+	"description":"A spotted thing",
+	"costToBuy":50,
+	"rewardForBreed":10,
+	"averageLifetime":10.0,
+	"movementSpeed":1.5,
+	"averageMateDelay":744.0,
+	"mateChance":0.75,
+	"fertility":0.4,
+	"matingRange":100.0,
+	"prefabStub":"Entities\\Cow_Prefab",
+	"portraitStub":"Portraits\\Cow",
+	"isSelective":false
+}

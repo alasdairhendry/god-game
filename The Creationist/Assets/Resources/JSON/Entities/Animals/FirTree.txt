@@ -1,0 +1,17 @@
+{
+	"name": "Fir Tree",
+	"entityDataID":0,
+	"infantName":"Sapling",
+	"description":"A foresty boi",
+	"costToBuy":125,
+	"rewardForBreed":75,
+	"averageLifetime":2.5,
+	"movementSpeed":0,
+	"averageMateDelay":200.0,
+	"mateChance":0.75,
+	"fertility":0.85,
+	"matingRange":15.0,
+	"prefabStub":"Entities\\FirTree_Prefab",
+	"portraitStub":"Portraits\\FirTree",
+	"isSelective":false
+}

@@ -1,0 +1,17 @@
+{
+	"name": "Sheep",
+	"entityDataID":0,
+	"infantName":"Lamb",
+	"description":"A Fluffy Boi",
+	"costToBuy":-1,
+	"rewardForBreed":50,
+	"averageLifetime":6.0,
+	"movementSpeed":1,
+	"averageMateDelay":93.0,
+	"mateChance":1.0,
+	"fertility":1.0,
+	"matingRange":30.0,
+	"prefabStub":"Entities\\Sheep_Prefab",
+	"portraitStub":"Portraits\\Sheep",
+	"isSelective":true
+}

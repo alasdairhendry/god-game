@@ -1,0 +1,17 @@
+{
+	"name": "Black Bear",
+	"entityDataID":0,
+	"infantName":"Cub",
+	"description":"A rawry boi",
+	"costToBuy":100,
+	"rewardForBreed":25,
+	"averageLifetime":12,
+	"movementSpeed":1,
+	"averageMateDelay":892.0,
+	"mateChance":0.5,
+	"fertility":0.6,
+	"matingRange":65.0,
+	"prefabStub":"Entities\\BlackBear_Prefab",
+	"portraitStub":"Portraits\\BlackBear",
+	"isSelective":false
+}
