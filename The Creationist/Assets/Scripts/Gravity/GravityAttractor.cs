@@ -33,7 +33,7 @@ public class GravityAttractor : MonoBehaviour {
         Vector3 bodyUp = rb.transform.up;
 
         if(attract)
-        rb.AddForce(gravityUp * gravity * GameTime.singleton.GameTimeMultipler);
+        rb.AddForce(gravityUp * gravity * GameTime.singleton.GameTimeMultipler * Time.deltaTime);
 
         if (!rotate) return;
         Quaternion targetRotation = Quaternion.FromToRotation(bodyUp, gravityUp) * rb.transform.rotation;

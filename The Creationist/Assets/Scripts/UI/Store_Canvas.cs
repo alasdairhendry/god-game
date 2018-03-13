@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Store_Canvas : MonoBehaviour {
 
     public static Store_Canvas singleton;
+    [SerializeField] private bool DEBUG_AllowAllPurchases = true;
 
     private void Awake()
     {
@@ -106,9 +107,17 @@ public class Store_Canvas : MonoBehaviour {
         lifeTime.transform.Find("Value").GetComponent<Text>().text = GameTime.singleton.DaysToTime(data.AverageLifetime);
 
         display_PurchaseButton.onClick.RemoveAllListeners();
-        if (data.IsSelective)
+        if (!data.IsUnlocked)
         {
-            display_PurchaseButton.GetComponentInChildren<Text>().text = "Selective Only";
+            if (DEBUG_AllowAllPurchases)
+            {
+                display_PurchaseButton.onClick.AddListener(() => { EntityController.singleton.BeginPlacingEntity(data); Hide(); });
+                display_PurchaseButton.GetComponentInChildren<Text>().text = "Purchase";
+            }
+            else
+            {
+                display_PurchaseButton.GetComponentInChildren<Text>().text = "Locked";
+            }
         }
         else
         {

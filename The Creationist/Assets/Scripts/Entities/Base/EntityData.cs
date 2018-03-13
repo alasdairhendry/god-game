@@ -32,6 +32,16 @@ public class EntityData {
     [SerializeField] [Tooltip("The speed at which this entity moves")] private float movementSpeed = 3;
     public float MovementSpeed { get { return movementSpeed; } }
 
+    [SerializeField] private List<Attribute.AttributeJSONData> initialAttributes = new List<Attribute.AttributeJSONData>();
+    public List<Attribute.AttributeJSONData> InitialAttributes { get { return initialAttributes; } }
+
+    [SerializeField] private List<string> initialAI = new List<string>();
+    public List<string> InitialAI { get { return initialAI; } }
+
+    [Header("Roaming")]
+    [SerializeField] protected float roamingRange = 15.0f;
+    public float RoamingRange { get { return roamingRange; } }
+
     [Header("Mating")]
     [SerializeField] [Tooltip("The length between each mating session (days)")] private float averageMateDelay = 3;      // Days
     public float AverageMateDelay { get { return averageMateDelay; } }
@@ -54,13 +64,32 @@ public class EntityData {
 
     [Header("Selective Breeding")]
     [SerializeField] private bool isSelective = false;
-    public bool IsSelective { get { return isSelective; } }    
+    public bool IsSelective { get { return isSelective; } }
+
+    [SerializeField] private bool isUnlocked = false;
+    public bool IsUnlocked { get { return isUnlocked; } }
 
     public void InitializeData(string prefabStub, string portraitStub, float averageLifetime)
     {
         this.prefabStub = prefabStub;
         this.portraitStub = portraitStub;
         this.averageLifetime = averageLifetime;
+    }
+
+    public void Unlock()
+    {
+        if(!isUnlocked)
+        {
+            isUnlocked = true;
+            if(IsSelective)
+            {
+                Debug.Log("A new species has been discovered! It has been called " + name);
+            }
+            else
+            {
+                Debug.Log("A species has just been unlocked! " + name);
+            }
+        }
     }
 
     //public EntityData(EntityData data, GameObject activeGameObject, TerrainEntity.TerrainSegment spawnSegment)

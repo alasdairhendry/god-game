@@ -51,6 +51,7 @@ public class EntityPool : MonoBehaviour {
 
     public void Destroy(int ID, GameObject go)
     {
+        go.GetComponent<IPoolable>().OnDestroy();
         poolingData[ID].Enqueue(go);
         go.SetActive(false);
         go.transform.parent = GameObject.Find("ObjectPool").transform;

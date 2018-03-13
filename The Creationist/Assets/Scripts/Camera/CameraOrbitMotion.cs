@@ -78,6 +78,9 @@ public class CameraOrbitMotion : MonoBehaviour {
 
     private void ZoomInput()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             zoom = Mathf.Clamp(zoom - Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * Time.deltaTime, zoomLimit, 1.0f);

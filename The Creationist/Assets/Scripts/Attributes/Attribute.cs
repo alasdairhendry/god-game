@@ -14,9 +14,20 @@ public class Attribute {
         [Description("Entity Type")] entityType,
         [Description("Status")] status,
         [Description("Size")] size,
-        [Description("Biome Forest")] biomeForest,
         [Description("Biome Plains")] biomePlains,
-        [Description("Biome Tundra")] biomeTundra
+        [Description("Biome Forest")] biomeForest,
+        [Description("Biome Grasslands")] biomeGrasslands,
+        [Description("Biome Tundra")] biomeTundra,
+        [Description("Preferred Biome")] preferredBiomePlains,
+        [Description("Preferred Biome")] preferredBiomeForest,
+        [Description("Preferred Biome")] preferredBiomeGrasslands,
+        [Description("Preferred Biome")] preferredBiomeTundra,
+        [Description("Biome Plains")] matingBiomePlains,
+        [Description("Biome Forest")] matingBiomeForest,
+        [Description("Biome Grasslands")] matingBiomeGrasslands,
+        [Description("Biome Tundra")] matingBiomeTundra,
+        [Description("Movement Speed")] movementSpeedModifer,
+        [Description("Temperment")] temperment
     }
 
     [SerializeField] private AttributeKey key;
@@ -93,5 +104,20 @@ public class Attribute {
             return GameTime.singleton.DaysToTime(float.Parse(value));
 
         return value;
+    }
+
+    [System.Serializable]
+    public class AttributeJSONData
+    {
+        public string key;
+        public string type;
+        public string value;
+
+        public AttributeJSONData(string key, string type, string value)
+        {
+            this.key = key;
+            this.type = type;
+            this.value = value;
+        }
     }
 }

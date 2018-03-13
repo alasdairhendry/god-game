@@ -4,37 +4,114 @@ using UnityEngine;
 
 public class AI_Movement : AI {
 
-    protected float roamingCheckTick = 1.0f;  // How long to wait inbetween roaming checks
-    protected bool allowMovement = true;
+    //protected float roamingCheckTick = 1.0f;  // How long to wait inbetween roaming checks
+    //protected bool allowMovement = true;
+
+    //protected bool isMoving = false;
+    //protected Vector3 destination = Vector3.zero;
+
+    //protected override void Start() { base.Start(); }    
+
+    //protected override void Update() { }
+
+    //protected override void FixedUpdate()
+    //{
+    //    MoveToDestination();
+    //}
+
+    //protected virtual IEnumerator MonitorRoaming() { yield return null; }    
+
+    //protected virtual void MoveToDestination() { }
+
+    //protected virtual void OnReachedDestination() { }
+
+    //public virtual void ClearDestination() { }
+
+    //public virtual void EnableMovement() { allowMovement = true; }
+
+    //public virtual void DisableMovement() { allowMovement = true; }
+
+    //public void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(destination, 1f);
+    //}
 
     protected bool isMoving = false;
-    protected Vector3 destination = Vector3.zero;    
-    
-    protected override void Start() { base.Start(); }    
-    
-    protected override void Update() { }
+    protected Vector3 destination = Vector3.zero;
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
 
     protected override void FixedUpdate()
     {
+        base.FixedUpdate();
+
         MoveToDestination();
     }
 
-    protected virtual IEnumerator MonitorRoaming() { yield return null; }    
+    public override float GetPriority()
+    {
+        return base.GetPriority();
+    }
 
-    protected virtual void MoveToDestination() { }
+    //public override void Begin()
+    //{
+    //    base.Begin();
+    //}
 
-    protected virtual void OnReachedDestination() { }
+    //public override void Stop()
+    //{
+    //    base.Stop();
+    //}
 
-    public virtual void ClearDestination() { }
+    protected override void OnStart()
+    {
+        base.OnStart();
 
-    public virtual void EnableMovement() { allowMovement = true; }
+        FindDestination();
+    }
 
-    public virtual void DisableMovement() { allowMovement = true; }
+    protected override void OnFinish()
+    {
+        base.OnFinish();
+    }
 
-    public void OnDrawGizmosSelected()
+    public override void Reset()
+    {
+        base.Reset();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+    }
+
+    // ------------------------------------------------ \\
+
+    protected virtual void FindDestination()
+    {
+
+    }
+
+    protected virtual void MoveToDestination() { }    
+
+    public virtual void ClearDestination()
+    {
+        OnFinish();
+    }
+
+    protected virtual void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(destination, 1f);
+        Gizmos.DrawSphere(destination, 1.5f);
     }
 }
 

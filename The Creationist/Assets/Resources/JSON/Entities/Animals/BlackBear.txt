@@ -11,7 +11,18 @@
 	"mateChance":0.5,
 	"fertility":0.6,
 	"matingRange":65.0,
-	"prefabStub":"Entities\\BlackBear_Prefab",
-	"portraitStub":"Portraits\\BlackBear",
-	"isSelective":false
+	"isSelective":false,
+	"isUnlocked":true,
+
+	"initialAttributes":
+	[
+		{"key":"preferredBiomeForest","type":"float","value":"0.70"},
+		{"key":"temperment","type":"string","value":"aggressive"}
+	],
+
+	"initialAI":
+	[
+		"Movement_DefaultRoaming",
+		"Mating_Animal"
+	]
 }

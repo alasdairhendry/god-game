@@ -7,11 +7,23 @@
 	"rewardForBreed":50,
 	"averageLifetime":6.0,
 	"movementSpeed":1,
+	"roamingRange": 7.5,
 	"averageMateDelay":93.0,
 	"mateChance":1.0,
 	"fertility":1.0,
 	"matingRange":30.0,
-	"prefabStub":"Entities\\Sheep_Prefab",
-	"portraitStub":"Portraits\\Sheep",
-	"isSelective":true
+	"isSelective":true,
+	"isUnlocked":false,
+
+	"initialAttributes":
+	[
+		{"key":"preferredBiomeGrasslands","type":"float","value":"0.85"},
+		{"key":"temperment","type":"string","value":"docile"}
+	],
+
+	"initialAI":
+	[
+		"Movement_DefaultRoaming",
+		"Mating_Animal"
+	]
 }

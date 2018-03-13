@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour, IInspectable, IPoolable
 {
-
     protected EntityData _data;
     public EntityData GetData { get { return _data; } }
     protected Animator animator;
@@ -21,19 +20,24 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
     protected float lifetime;
     protected float mateCounter = 0.0f; // Counts up to reach our average mate delay in Days
     
-    protected bool isOfMatingAge = false; // Are we current an infant, or can we mate? (Infant is currently set to first 15% of average lifetime
+    [SerializeField] protected bool isOfMatingAge = false; // Are we current an infant, or can we mate? (Infant is currently set to first 15% of average lifetime
     public bool IsOfMatingAge { get { return isOfMatingAge; } }    
 
-    protected Vector3 targetDestination = new Vector3(0, 0, 0);
     [SerializeField] protected List<Attribute> attributes = new List<Attribute>();
     protected List<Attribute> Attributes { get { return attributes; } set { attributes = value; } }
     public List<Attribute> GetAttributes { get { return attributes; } }
+
+    [SerializeField] protected List<AI> aiComponents = new List<AI>();    
 
     protected List<RadialOptionMenu> radialOptions = new List<RadialOptionMenu>();
     public List<RadialOptionMenu> RadialOptions { get { return radialOptions; } }
 
     protected bool isPickedUp = false;
     public bool IsPickedUp { get { return isPickedUp; } }
+
+    protected Vector3 habitatOrigin = Vector3.zero;
+    public Vector3 GetHabitatOrigin { get { return habitatOrigin; } }
+    public Vector3 SetHabitatOrigin { set { habitatOrigin = value; } }
 
     public virtual void Initialize(EntityData data, TerrainEntity.TerrainSegment spawnSegment)
     {
@@ -44,7 +48,8 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
 
         AddInitialAttributes();
         AddInitialRadialOptions();
-        gameObject.name = data.Name + " " + UnityEngine.Random.value;
+        AddInitialAI();
+        gameObject.name = data.Name + " " + UnityEngine.Random.value;        
     }
 
     // Use this for initialization
@@ -63,13 +68,37 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
     protected virtual void AddInitialAttributes()
     {
         Attributes = new List<Attribute>()
-        {
-            new Attribute(Attribute.AttributeKey.entityType, "Fake Entity"),
-            new Attribute(Attribute.AttributeKey.name, "New Name"),
+        {            
+            new Attribute(Attribute.AttributeKey.species, _data.Name),
+            new Attribute(Attribute.AttributeKey.name, EntityController.singleton.GetRandomAnimalName() + " the " + _data.InfantName),
             new Attribute(Attribute.AttributeKey.age, 1.0f),
-            new Attribute(Attribute.AttributeKey.species, "Fake Species"),
-            new Attribute(Attribute.AttributeKey.status, "Idling")
+            new Attribute(Attribute.AttributeKey.status, "Idling"),
+            new Attribute(Attribute.AttributeKey.size, 1.0f),
+            new Attribute(Attribute.AttributeKey.movementSpeedModifer, 1.0f)            
         };
+
+        foreach (Attribute.AttributeJSONData data in _data.InitialAttributes)
+        {
+            Attribute.AttributeKey key = (Attribute.AttributeKey)System.Enum.Parse(typeof(Attribute.AttributeKey), data.key);
+            Attribute.AttributeType type = (Attribute.AttributeType)System.Enum.Parse(typeof(Attribute.AttributeType), data.type.ToUpper());
+            string value = data.value;
+
+            if (type == Attribute.AttributeType.STRING)
+            {
+                Attribute attr = new Attribute(key, value);
+                Attributes.Add(attr);
+            }
+            else if (type == Attribute.AttributeType.INT)
+            {
+                Attribute attr = new Attribute(key, int.Parse(value));
+                Attributes.Add(attr);
+            }
+            else if (type == Attribute.AttributeType.FLOAT)
+            {
+                Attribute attr = new Attribute(key, float.Parse(value));
+                Attributes.Add(attr);
+            }
+        }
     }
 
     protected virtual void AddInitialRadialOptions()
@@ -87,12 +116,32 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
 
     protected virtual void AddInitialAI()
     {
+        foreach (string ai in _data.InitialAI)
+        {
+            switch (ai)
+            {
+                case "Movement_DefaultRoaming":
+                    gameObject.AddComponent<AI_Movement_DefaultRoaming>();
+                    break;
 
+                case "Mating_Animal":
+                    gameObject.AddComponent<AI_Mating_Animal>();
+                    break;
+
+                case "Mating_Environment":
+                    gameObject.AddComponent<AI_Mating_Environment>();
+                    break;
+            }
+        }
     }
 
     protected virtual void RemoveInitialAI()
     {
-
+        AI[] ai = GetComponents<AI>();
+        for (int i = 0; i < ai.Length; i++)
+        {
+            Destroy(ai[i]);
+        }
     }    
 
     protected virtual void MonitorSize()
@@ -116,12 +165,6 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
             EntityPool.singleton.Destroy(_data.EntityDataID, this.gameObject);
 
         Attributes.Update(Attribute.AttributeKey.age, age);
-    }
-
-    public void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(targetDestination, 2f);
     }
 
     GameObject IInspectable.Target { get { if (gameObject != null) return gameObject; else return null; } }
@@ -151,56 +194,66 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
 
     public virtual void PickUp()
     {
+        //GetComponent<Rigidbody>().isKinematic = false;        
+
         GetComponent<GravityAttractee>().StopAttract();
         isPickedUp = true;
 
         attributes.Update(Attribute.AttributeKey.status, "Floating");
 
-        if (aiMating != null)
-            aiMating.DisableMating();
-
-        //if (targetMate != null)
-        //{
-        //    //targetMate.StopTargetAsMate();
-        //    //targetMate.HasBeenMated();
-        //    targetMate.IsMating = false;
-        //    targetMate = null;
-        //}
-
-        //SetDestination(Vector3.zero);
+        GetComponent<AIController>().Stop();
 
         if (terrainSegment != null)
             terrainSegment.RemoveEntityFromTerrain(this);
     }
 
-    public virtual void Drop()
+    public virtual void Drop(Vector3 hitPoint)
     {
-        GetComponent<GravityAttractee>().StartAttract();
-        isPickedUp = false;
+        habitatOrigin = hitPoint;
 
-        attributes.Update(Attribute.AttributeKey.status, "Idling");
+        GetComponent<GravityAttractee>().StartAttract();
+        isPickedUp = false;        
 
         if (terrainSegment != null)
             terrainSegment.AddEntityToTerrain(this);
 
-        if (aiMating != null)
-            aiMating.EnableMating();
+        GetComponent<AIController>().Play();
+    }
+
+    public virtual void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(habitatOrigin, 1.5f);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(habitatOrigin, _data.RoamingRange * 2);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(habitatOrigin, _data.RoamingRange);
     }
 
     void IPoolable.OnInstantiate()
     {
         age = 1;
         lifetime = 0;
-        mateCounter = 0.0f;        
-        targetDestination = Vector3.zero;
+        mateCounter = 0.0f;                
         attributes.Clear();
         radialOptions.Clear();
         isPickedUp = false;
 
-        AI[] ais = GetComponents<AI>();
-        foreach (AI ai in ais)
-        {
-            ai.Reset();
-        }
+        if (_data != null)
+            AddInitialAI();
+        
+        //AI[] ais = GetComponents<AI>();
+        //foreach (AI ai in ais)
+        //{
+        //    ai.Reset();
+        //}
+    }
+
+    void IPoolable.OnDestroy()
+    {
+        RemoveInitialAI();
+        terrainSegment.RemoveEntityFromTerrain(this);
     }
 }

@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IPoolable {
 
     void OnInstantiate();
-
+    void OnDestroy();
 }

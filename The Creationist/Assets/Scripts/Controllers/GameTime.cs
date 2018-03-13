@@ -80,4 +80,15 @@ public class GameTime : MonoBehaviour {
     {
         GUI.Label(new Rect(16, 16, 256, 32), "Current Day: " + currentDay.ToString());
     }
+
+    public IEnumerator Yield(float seconds)
+    {
+        float x = 0;
+
+        while(x < seconds)
+        {
+            x += Time.deltaTime * gameTimeMultiplier;
+            yield return null;
+        }
+    }
 }

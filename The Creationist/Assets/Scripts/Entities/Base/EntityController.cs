@@ -29,9 +29,9 @@ public class EntityController : MonoBehaviour {
 
     private void Start()
     {
-        //string json = JsonUtility.ToJson(entities[0]);
-        //Debug.Log(json);
-        //File.WriteAllText("C:\\Users\\alasdair\\Desktop\\JsonData.txt", json);
+        string json = JsonUtility.ToJson(entities[0]);
+        Debug.Log(json);
+        File.WriteAllText("C:\\Users\\alasdair\\Desktop\\JsonData.txt", json);
 
         entities.Clear();
 
@@ -146,45 +146,30 @@ public class EntityController : MonoBehaviour {
                 InteractionState.singleton.SetPlacingEntity(false);
             }
         }
-
-        //if (Physics.RaycastAll(Ray)
-        //{
-        //    if (hit.collider.gameObject.tag == "TerrainSegment")
-        //    {
-        //        Vector3 direction = (Vector3.zero - hit.point).normalized;
-        //        CreateEntity(dataBeingPlaced.EntityDataID, hit.point, direction, TerrainEntity.singleton.FindSegment(hit.collider.gameObject), Mathf.Lerp(1.5f, 20.0f, Mathf.InverseLerp(FindObjectOfType<CameraOrbitMotion>().ZoomLimit, 1.0f, FindObjectOfType<CameraOrbitMotion>().ZoomLevel)));
-        //        Destroy(gameObjectBeingPlaced);
-        //        gameObjectBeingPlaced = null;
-
-        //        InteractionState.singleton.SetPlacingEntity(false);
-        //    }
-        //}
     }
 
     private void CreateEntity(int id, Vector3 terrainNodePosition, Vector3 direction, TerrainEntity.TerrainSegment spawnSegment)
     {
         entitiesAwaitingSpawn.Enqueue(() => {
-            GameObject go = EntityPool.singleton.Instantiate(id);
-            //GameObject go = Instantiate(Resources.Load(entities[id].PrefabStub)) as GameObject;
+            GameObject go = EntityPool.singleton.Instantiate(id);            
             go.transform.position = terrainNodePosition - (direction * 20.0f);
             go.transform.parent = GravityAttractor.singleton.transform.Find("Entities");
 
             go.GetComponent<Entity>().Initialize(entities[id], spawnSegment);
-            //EntityData data = new EntityData(entities[id], go, spawnSegment);
+            go.GetComponent<Entity>().SetHabitatOrigin = terrainNodePosition;
         });
     }
 
     private void CreateEntity(int id, Vector3 terrainNodePosition, Vector3 direction, TerrainEntity.TerrainSegment spawnSegment, float offsetFromPlanet)
     {
         entitiesAwaitingSpawn.Enqueue(() =>
-        {
-            //GameObject go = Instantiate(Resources.Load(entities[id].PrefabStub)) as GameObject;
+        {            
             GameObject go = EntityPool.singleton.Instantiate(id);
             go.transform.position = terrainNodePosition - (direction * offsetFromPlanet);
             go.transform.parent = GravityAttractor.singleton.transform.Find("Entities");
 
             go.GetComponent<Entity>().Initialize(entities[id], spawnSegment);
-            //EntityData data = new EntityData(entities[id], go, spawnSegment);
+            go.GetComponent<Entity>().SetHabitatOrigin = terrainNodePosition;
         });
     }
 

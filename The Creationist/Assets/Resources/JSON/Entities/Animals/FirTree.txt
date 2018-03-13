@@ -11,7 +11,16 @@
 	"mateChance":0.75,
 	"fertility":0.85,
 	"matingRange":15.0,
-	"prefabStub":"Entities\\FirTree_Prefab",
-	"portraitStub":"Portraits\\FirTree",
-	"isSelective":false
+	"isSelective":false,
+	"isUnlocked":true,
+
+	"initialAttributes":
+	[
+		{"key":"biomeForest","type":"float","value":"1"}
+	],
+
+	"initialAI":
+	[
+		"Mating_Environment"		
+	]
 }

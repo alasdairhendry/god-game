@@ -19,15 +19,34 @@ public class EntityPickupControl : MonoBehaviour {
 
         if(Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
+            //if (Physics.Raycast(ray, out hit))
+            //{
+            //    if (hit.collider.gameObject.tag == "TerrainSegment")
+            //    {
+            //        GetComponent<Entity>().TerrainSegment = TerrainEntity.singleton.FindSegment(hit.collider.gameObject);
+            //        Drop(hit.point);
+            //        Debug.Log(hit.point);
+            //        Destroy(this);
+            //    }
+            //}
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit[] hits;
+
+
+            hits = Physics.RaycastAll(ray);
+
+            foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject.tag == "TerrainSegment")
                 {
                     GetComponent<Entity>().TerrainSegment = TerrainEntity.singleton.FindSegment(hit.collider.gameObject);
+                    Drop(hit.point);                    
                     Destroy(this);
+                    break;
                 }
             }
         }
@@ -53,9 +72,15 @@ public class EntityPickupControl : MonoBehaviour {
         transform.position = Vector3.Lerp(transform.position, requestedPosition, 25 * Time.deltaTime);
     }
 
+    private void Drop(Vector3 hitPoint)
+    {
+        GetComponent<Entity>().Drop(hitPoint);
+        GetComponent<Collider>().isTrigger = false;
+    }
+
     private void OnDestroy()
     {
-        GetComponent<Entity>().Drop();
-        GetComponent<Collider>().isTrigger = false;
+        //GetComponent<Entity>().Drop();
+        //GetComponent<Collider>().isTrigger = false;
     }
 }
