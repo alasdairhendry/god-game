@@ -1,0 +1,30 @@
+{
+	"entityType": 0,
+	"species": "Boar",
+	"entityDataID":0,
+	"infantName":"Pigley",
+	"description":"A tusky boi",
+	"costToBuy":100,
+	"rewardForBreed":25,
+	"averageLifetime":6.5,
+	"movementSpeed":1.5,
+	"averageMateDelay":850.0,
+	"mateChance":0.9,
+	"fertility":0.7,
+	"matingRange":65.0,
+	"isSelective":true,
+	"isUnlocked":false,
+
+	"initialAttributes":
+	[		
+		{"key":"preferredBiome","type":"string","value":"Grasslands", "modifiable":false},
+		{"key":"preferredBiome","type":"string","value":"Tundra", "modifiable":false},
+		{"key":"temperment","type":"string","value":"aggressive", "modifiable":false}
+	],
+
+	"initialAI":
+	[
+		"Movement_DefaultRoaming",
+		"Mating_Animal"
+	]
+}

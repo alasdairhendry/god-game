@@ -1,0 +1,30 @@
+{
+	"entityType": 0,
+	"species": "Deer",
+	"entityDataID":0,
+	"infantName":"Fawn",
+	"description":"A timidy boi",
+	"costToBuy":100,
+	"rewardForBreed":25,
+	"averageLifetime":4.0,
+	"movementSpeed":1.5,
+	"averageMateDelay":600.0,
+	"mateChance":0.85,
+	"fertility":0.9,
+	"matingRange":65.0,
+	"isSelective":true,
+	"isUnlocked":false,
+
+	"initialAttributes":
+	[
+		{"key":"preferredBiome","type":"string","value":"Forest", "modifiable":false},
+		{"key":"preferredBiome","type":"string","value":"Grasslands", "modifiable":false},
+		{"key":"temperment","type":"string","value":"docile", "modifiable":false}
+	],
+
+	"initialAI":
+	[
+		"Movement_DefaultRoaming",
+		"Mating_Animal"
+	]
+}

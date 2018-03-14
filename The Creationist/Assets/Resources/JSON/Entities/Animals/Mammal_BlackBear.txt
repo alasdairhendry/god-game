@@ -1,0 +1,29 @@
+{
+	"entityType": 0,
+	"species": "Black Bear",
+	"entityDataID":0,
+	"infantName":"Cub",
+	"description":"A rawry boi",
+	"costToBuy":100,
+	"rewardForBreed":25,
+	"averageLifetime":12,
+	"movementSpeed":1,
+	"averageMateDelay":892.0,
+	"mateChance":0.5,
+	"fertility":0.6,
+	"matingRange":65.0,
+	"isSelective":false,
+	"isUnlocked":true,
+
+	"initialAttributes":
+	[
+		{"key":"preferredBiome","type":"string","value":"Forest", "modifiable":false},
+		{"key":"temperment","type":"string","value":"aggressive", "modifiable":false}
+	],
+
+	"initialAI":
+	[
+		"Movement_DefaultRoaming",
+		"Mating_Animal"
+	]
+}

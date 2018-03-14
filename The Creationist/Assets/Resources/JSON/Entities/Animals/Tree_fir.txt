@@ -1,0 +1,27 @@
+{
+	"entityType": 3,
+	"species": "Fir",
+	"entityDataID":0,
+	"infantName":"Sapling",
+	"description":"A foresty boi",
+	"costToBuy":125,
+	"rewardForBreed":75,
+	"averageLifetime":2.5,
+	"movementSpeed":0,
+	"averageMateDelay":200.0,
+	"mateChance":0.75,
+	"fertility":0.85,
+	"matingRange":15.0,
+	"isSelective":false,
+	"isUnlocked":true,
+
+	"initialAttributes":
+	[
+		{"key":"biomeForest","type":"float","value":"1", "modifiable":false}
+	],
+
+	"initialAI":
+	[
+		"Mating_Environment"		
+	]
+}

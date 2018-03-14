@@ -1,0 +1,31 @@
+{
+	"entityType": 0,
+	"species": "Rabbit",
+	"entityDataID":0,
+	"infantName":"Kit",
+	"description":"A Fluffier Boi",
+	"costToBuy":-1,
+	"rewardForBreed":50,
+	"averageLifetime":3.0,
+	"movementSpeed":1,
+	"roamingRange": 10.0,
+	"averageMateDelay":80.0,
+	"mateChance":1.0,
+	"fertility":1.0,
+	"matingRange":30.0,
+	"isSelective":true,
+	"isUnlocked":false,
+
+	"initialAttributes":
+	[
+		{ "key":"preferredBiome", "type":"string", "value":"Grasslands", "modifiable":false },
+		{ "key":"preferredBiome", "type":"string", "value":"Forest", "modifiable":false },
+		{"key":"temperment", "type":"string", "value":"social", "modifiable":false }
+	],
+
+	"initialAI":
+	[
+		"Movement_DefaultRoaming",
+		"Mating_Animal"
+	]
+}

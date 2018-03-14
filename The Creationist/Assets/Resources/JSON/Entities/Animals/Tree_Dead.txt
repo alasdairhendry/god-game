@@ -1,0 +1,27 @@
+{
+	"entityType": 3,
+	"species": "Dead",
+	"entityDataID":0,
+	"infantName":"Sapling",
+	"description":"A deady boi",
+	"costToBuy":125,
+	"rewardForBreed":75,
+	"averageLifetime":2.5,
+	"movementSpeed":0,
+	"averageMateDelay":200.0,
+	"mateChance":0.75,
+	"fertility":0.85,
+	"matingRange":15.0,
+	"isSelective":false,
+	"isUnlocked":true,
+
+	"initialAttributes":
+	[
+		{"key":"biomeTundra","type":"float","value":"1", "modifiable":false}
+	],
+
+	"initialAI":
+	[
+	
+	]
+}

@@ -6,6 +6,7 @@
 		_Coordinate ("Coordinate", Vector) = (0,0,0,0)
 		_Scale("Scale", Vector) = (0,0,0,0)
 		_Color ("Draw Color", Color) = (1,0,0,0)
+		
 	}
 	SubShader
 	{
@@ -52,7 +53,7 @@
 			{
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv);
-				float draw = pow(saturate(1- distance(i.uv, _Coordinate.xy)), 750);
+				float draw = pow(saturate(1- distance(i.uv, _Coordinate.xy)), 50);
 				fixed4 drawCol = _Color * (draw * 100);				
 				fixed4 x = saturate(col + drawCol);				
 				// x -= 0.001f;

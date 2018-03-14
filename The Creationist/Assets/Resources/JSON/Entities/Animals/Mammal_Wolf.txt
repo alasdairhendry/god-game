@@ -1,0 +1,29 @@
+{
+	"entityType": 0,
+	"species": "Wolf",
+	"entityDataID":0,
+	"infantName":"Pup",
+	"description":"A howly boi",
+	"costToBuy":100,
+	"rewardForBreed":25,
+	"averageLifetime":7.5,
+	"movementSpeed":1.2,
+	"averageMateDelay":600.0,
+	"mateChance":0.65,
+	"fertility":0.8,
+	"matingRange":65.0,
+	"isSelective":true,
+	"isUnlocked":false,
+
+	"initialAttributes":
+	[
+		{"key":"preferredBiome","type":"string","value":"Forest", "modifiable":false},
+		{"key":"temperment","type":"string","value":"aggressive", "modifiable":false}
+	],
+
+	"initialAI":
+	[
+		"Movement_DefaultRoaming",
+		"Mating_Animal"
+	]
+}

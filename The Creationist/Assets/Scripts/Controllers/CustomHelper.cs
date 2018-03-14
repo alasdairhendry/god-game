@@ -126,4 +126,39 @@ public static class CustomHelper {
             return singular;
         else return plural;
     }
+
+    public static string Commafy<T>(this List<T> list)
+    {
+        if (list.Count > 0)
+        {
+            string output = "";
+
+            if (list.Count == 1)
+            {
+                output += list[0];
+            }
+            else if (list.Count == 2)
+            {
+                output += list[0] + ", ";
+                output += list[1];
+            }
+            else
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (i == list.Count - 1)
+                    {
+                        output += list[i];
+                    }
+                    else
+                    {
+                        output += list[i] + ", ";
+                    }
+                }
+            }
+
+            return output;
+        }
+        else return "List Empty";
+    }
 }

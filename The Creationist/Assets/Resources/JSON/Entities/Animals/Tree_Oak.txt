@@ -1,0 +1,27 @@
+{
+	"entityType": 3,
+	"species": "Oak",
+	"entityDataID":0,
+	"infantName":"Sapling",
+	"description":"A oaky boi",
+	"costToBuy":150,
+	"rewardForBreed":75,
+	"averageLifetime":5,
+	"movementSpeed":0,
+	"averageMateDelay":350.0,
+	"mateChance":0.75,
+	"fertility":0.85,
+	"matingRange":15.0,
+	"isSelective":false,
+	"isUnlocked":true,
+
+	"initialAttributes":
+	[
+		{"key":"biomeGrasslands","type":"float","value":"1", "modifiable":false}
+	],
+
+	"initialAI":
+	[
+		"Mating_Environment"		
+	]
+}

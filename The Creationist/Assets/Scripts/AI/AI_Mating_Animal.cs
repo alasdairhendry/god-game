@@ -265,22 +265,12 @@ public class AI_Mating_Animal : AI_Mating {
             if (e == null) continue;
             if (e == base.entity) continue;
             if (e.gameObject == null) continue;
+            if (e.GetData.Species != entity.GetData.Species) continue;
             if (!e.GetComponent<AI_Mating>().IsAvailable()) continue;
 
             if (Vector3.Distance(e.transform.position, base.entity.transform.position) > base.entityData.MatingRange) continue;
 
-            if (EntityController.singleton.CheckMateMatch(base.entity, e))
-            {
-                eligibleEntities.Add(e);
-            }
-
-            //if (base.targetMate == base.entity)
-            //{
-            //    if (GetComponent<AIController>().throwDebugs)
-            //        Debug.LogError("BROBGOSFKO", this);
-            //}
-
-
+            eligibleEntities.Add(e);
         }
 
         e = eligibleEntities;
@@ -330,6 +320,12 @@ public class AI_Mating_Animal : AI_Mating {
     {
         isMating = true;
         
+        if(targetMate == null)
+        {
+            OnMateComplete();
+            yield break;
+        }
+
         yield return StartCoroutine(GameTime.singleton.Yield(Random.Range(1.5f, 3.0f)));
 
         if (targetMate.IsPickedUp)
@@ -345,7 +341,7 @@ public class AI_Mating_Animal : AI_Mating {
             float fertilityChance = Random.value;
             if (fertilityChance <= entityData.Fertility)
             {
-                EntityController.singleton.Breed(entity, targetMate);
+                Breeding.singleton.Breed(entity, targetMate, entity.transform.position);
                 targetMate.GetComponent<AI_Mating>().OnMateComplete();
                 OnMateComplete();
             }

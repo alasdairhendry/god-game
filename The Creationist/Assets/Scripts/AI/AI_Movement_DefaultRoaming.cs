@@ -105,8 +105,12 @@ public class AI_Movement_DefaultRoaming : AI_Movement {
                 GetComponent<Entity>().GetAttributes.Update(Attribute.AttributeKey.status, "Roaming");
                 entity.GetComponent<Animator>().SetBool("isMoving", true);
             }
+
             Vector3 moveDirection = (destination - GetComponent<Rigidbody>().position).normalized;
             GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + moveDirection * entityData.MovementSpeed * Time.deltaTime * GameTime.singleton.GameTimeMultipler);
+
+            Quaternion rot = Quaternion.FromToRotation(transform.Find("Graphics").forward, destination);
+            transform.Find("Graphics").rotation = Quaternion.Slerp(transform.Find("Graphics").rotation, rot, 250 * Time.deltaTime);
 
             if(Vector3.Distance(transform.position, destination) <= 1.5f)
             {

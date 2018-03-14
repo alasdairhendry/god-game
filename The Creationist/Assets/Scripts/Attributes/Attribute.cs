@@ -18,10 +18,7 @@ public class Attribute {
         [Description("Biome Forest")] biomeForest,
         [Description("Biome Grasslands")] biomeGrasslands,
         [Description("Biome Tundra")] biomeTundra,
-        [Description("Preferred Biome")] preferredBiomePlains,
-        [Description("Preferred Biome")] preferredBiomeForest,
-        [Description("Preferred Biome")] preferredBiomeGrasslands,
-        [Description("Preferred Biome")] preferredBiomeTundra,
+        [Description("Preferred Biome")] preferredBiome,
         [Description("Biome Plains")] matingBiomePlains,
         [Description("Biome Forest")] matingBiomeForest,
         [Description("Biome Grasslands")] matingBiomeGrasslands,
@@ -41,16 +38,19 @@ public class Attribute {
     public string DisplayName { get { return displayName; } }
     [SerializeField] private string value = "";
 
-    [HideInInspector] private string stringValue = "";
+    private string stringValue = "";
     public string StringValue { get { return stringValue; } }
 
-    [HideInInspector] private int intValue = -1;
+    private int intValue = -1;
     public int IntValue { get { return intValue; } }
 
-    [HideInInspector] private float floatValue = 0.0f;
+    private float floatValue = 0.0f;
     public float FloatValue { get { return floatValue; } }
 
-    public Attribute(AttributeKey key, string value)
+    private bool modifiable = false;
+    public bool Modifiable { get { return modifiable; } }
+
+    public Attribute(AttributeKey key, string value, bool modifiable)
     {
         this.key = key;
         stringValue = value;
@@ -59,7 +59,7 @@ public class Attribute {
         this.displayName = CustomHelper.GetDescription(key);
     }
 
-    public Attribute(AttributeKey key, int value)
+    public Attribute(AttributeKey key, int value, bool modifiable)
     {
         this.key = key;
         intValue = value;
@@ -68,7 +68,7 @@ public class Attribute {
         this.displayName = CustomHelper.GetDescription(key);
     }
 
-    public Attribute(AttributeKey key, float value)
+    public Attribute(AttributeKey key, float value, bool modifiable)
     {
         this.key = key;
         floatValue = value;
@@ -112,12 +112,14 @@ public class Attribute {
         public string key;
         public string type;
         public string value;
+        public bool modifiable;
 
-        public AttributeJSONData(string key, string type, string value)
+        public AttributeJSONData(string key, string type, string value, bool modifiable)
         {
             this.key = key;
             this.type = type;
             this.value = value;
+            this.modifiable = modifiable;
         }
     }
 }

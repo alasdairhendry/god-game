@@ -1,0 +1,30 @@
+{
+	"entityType": 0,
+	"species": "Fox",
+	"entityDataID":0,
+	"infantName":"Pup",
+	"description":"A Fluffy Boi",
+	"costToBuy":-1,
+	"rewardForBreed":50,
+	"averageLifetime":8.0,
+	"movementSpeed":1,
+	"roamingRange": 7.5,
+	"averageMateDelay":108.0,
+	"mateChance":1.0,
+	"fertility":1.0,
+	"matingRange":30.0,
+	"isSelective":false,
+	"isUnlocked":false,
+
+	"initialAttributes":
+	[
+		{"key":"preferredBiome","type":"string","value":"Tundra", "modifiable":false},
+		{"key":"temperment","type":"string","value":"aggressive", "modifiable":false}
+	],
+
+	"initialAI":
+	[
+		"Movement_DefaultRoaming",
+		"Mating_Animal"
+	]
+}

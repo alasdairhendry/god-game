@@ -216,14 +216,12 @@ public class AI_Mating_Environment : AI_Mating {
             if (e == null) continue;
             if (e == base.entity) continue;
             if (e.gameObject == null) continue;
+            if (e.GetData.Species != entity.GetData.Species) continue;
             if (!e.GetComponent<AI_Mating>().IsAvailable()) continue;
 
             if (Vector3.Distance(e.transform.position, base.entity.transform.position) > base.entityData.MatingRange) continue;
 
-            if (EntityController.singleton.CheckMateMatch(base.entity, e))
-            {
-                eligibleEntities.Add(e);
-            }
+            eligibleEntities.Add(e);            
         }
 
         e = eligibleEntities;
@@ -296,7 +294,7 @@ public class AI_Mating_Environment : AI_Mating {
                             if (entity.TerrainSegment.terrain == hit.collider.gameObject)
                             {
                                 spawnDestination = hit.point;
-                                EntityController.singleton.BreedAtPoint(entity, targetMate, spawnDestination);
+                                Breeding.singleton.Breed(entity, targetMate, spawnDestination);
                                 targetMate.GetComponent<AI_Mating>().OnMateComplete();
                                 OnMateComplete();
                                 break;

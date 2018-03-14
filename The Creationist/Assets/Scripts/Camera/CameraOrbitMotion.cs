@@ -19,23 +19,41 @@ public class CameraOrbitMotion : MonoBehaviour {
     public float ZoomLimit { get { return zoomLimit; } }
     float x = 0.0f, y = 0.0f;
 
-    private bool followMode = false;
+    private bool followMode = false;    
     private GameObject followTarget;
+    private IInspectable followInspectable;
 
     private bool shouldOrbit = false;
 
     void Update ()
     {
-        Orbit();
-        Follow();
+        if (!followMode)
+        {
+            Orbit();           
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                StopFollow();
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    StopFollow();
+                    shouldOrbit = true;
+                }
+            }
+
+            Follow();
+        }
+
         ZoomInput();
         Zoom();
     }
 
     private void Orbit()
-    {
-        if (followMode) return;
-
+    {        
         if (Input.GetMouseButtonDown(1))
         {
             if (!EventSystem.current.IsPointerOverGameObject())
@@ -61,19 +79,39 @@ public class CameraOrbitMotion : MonoBehaviour {
 
     private void Follow()
     {
+        if (followTarget == null) { StopFollow(); return; }
 
+        float rotationModifier = Mathf.Lerp(0.1f, 1.0f, Mathf.InverseLerp(zoomLimit, 1.0f, zoom));        
+        Vector3 direction = (transform.position - followTarget.transform.position).normalized;
+
+        Quaternion look = Quaternion.FromToRotation(transform.forward, direction) * transform.rotation;
+        transform.rotation = Quaternion.Slerp(transform.rotation, look, rotationSmooth * Time.deltaTime * rotationModifier);
     }
 
     public void SetFollow(GameObject target)
-    {
+    {       
         followMode = true;
         followTarget = target;
+        if(followTarget.GetComponent<IInspectable>().Target != null)
+        {
+            followInspectable = followTarget.GetComponent<IInspectable>();
+            followInspectable.OnStartInspect();
+        }
     }
 
     public void StopFollow()
     {
+        if (followInspectable != null)
+        {
+            if (followInspectable.Target != null)
+            {
+                followInspectable.OnStopInspect();
+            }
+        }
+        
         followMode = false;
         followTarget = null;
+        followInspectable = null;
     }
 
     private void ZoomInput()

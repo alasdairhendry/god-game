@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class TEST_DrawTextureOnTerrain : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+    [SerializeField] private float size = 1.0f;
 	// Update is called once per frame
 	void Update () {
         if (Input.GetMouseButton(0))
