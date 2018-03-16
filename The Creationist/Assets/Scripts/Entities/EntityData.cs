@@ -35,6 +35,9 @@ public class EntityData {
     [SerializeField] [Tooltip("The speed at which this entity moves")] private float movementSpeed = 3;
     public float MovementSpeed { get { return movementSpeed; } }
 
+    [SerializeField] private float hungerDecreaseModifier = 0.001f;
+    public float HungerDecreaseModifer { get { return hungerDecreaseModifier; } }
+
     [SerializeField] private List<Attribute.AttributeJSONData> initialAttributes = new List<Attribute.AttributeJSONData>();
     public List<Attribute.AttributeJSONData> InitialAttributes { get { return initialAttributes; } }
 
@@ -91,27 +94,4 @@ public class EntityData {
         }
         else Debug.LogError(Species + " is already unlocked!");    
     }
-
-    //public EntityData(EntityData data, GameObject activeGameObject, TerrainEntity.TerrainSegment spawnSegment)
-    //{
-    //    // Base
-    //    this.entityDataID = data.EntityDataID;
-    //    this.name = data.name;
-    //    this.infantName = data.infantName;
-    //    this.description = data.description;
-    //    this.averageLifetime = data.averageLifetime;
-    //    this.movementSpeed = data.movementSpeed;
-
-    //    // Mating
-    //    this.averageMateDelay = data.averageMateDelay;
-    //    this.mateChance = data.mateChance;
-    //    this.fertility = data.fertility;
-    //    this.matingRange = data.matingRange;
-
-    //    // Data
-    //    this.portraitStub = data.portraitStub;
-
-    //    this.activeGameObject = activeGameObject;
-    //    activeGameObject.GetComponent<Entity>().Initialize(this, spawnSegment);
-    //}
 }

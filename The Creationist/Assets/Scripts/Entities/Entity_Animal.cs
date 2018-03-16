@@ -24,6 +24,7 @@ public class Entity_Animal : Entity {
     {
         base.AddInitialAttributes();
         attributes.Add(new Attribute(Attribute.AttributeKey.movementSpeedModifer, 1.0f, true));
+        attributes.Add(new Attribute(Attribute.AttributeKey.hunger, 1.0f, false));
     }
 
     protected override void AddInitialRadialOptions()

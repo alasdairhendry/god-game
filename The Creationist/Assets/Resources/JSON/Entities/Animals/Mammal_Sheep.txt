@@ -6,10 +6,10 @@
 	"description":"A Fluffy Boi",
 	"costToBuy":-1,
 	"rewardForBreed":50,
-	"averageLifetime":6.0,
+	"averageLifetime":2.0,
 	"movementSpeed":1,
 	"roamingRange": 7.5,
-	"averageMateDelay":93.0,
+	"averageMateDelay":50.0,
 	"mateChance":1.0,
 	"fertility":1.0,
 	"matingRange":30.0,
@@ -19,12 +19,13 @@
 	"initialAttributes":
 	[
 		{ "key":"preferredBiome", "type":"string", "value":"Grasslands", "modifiable":false },
-		{ "key":"temperment", "type":"string", "value":"docile", "modifiable":false }
+		{ "key":"temperment", "type":"string", "value":"Docile", "modifiable":false }
 	],
 
 	"initialAI":
 	[
 		"Movement_DefaultRoaming",
-		"Mating_Animal"
+		"Mating_Animal",
+		"Hunger_Grazing"
 	]
 }

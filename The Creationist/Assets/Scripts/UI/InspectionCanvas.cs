@@ -5,92 +5,143 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InspectionCanvas : MonoBehaviour {
-
+    
     [SerializeField] private RectTransform inspectionPanel;
+
     [SerializeField] private InputField nameInputField;
-    [SerializeField] private Transform attributePairPanel;
+
+    [SerializeField] private Transform detailsTab_PairsPanel;
+    [SerializeField] private Transform attributesTab_PairsPanel;
+
     [SerializeField] private GameObject attributeText_Prefab;
-    private GameObject targetGO;
+
+    [SerializeField] private GameObject tab_Details;
+    [SerializeField] private GameObject tab_Attributes;    
+
+    private GameObject target;
     private List<Attribute> targetAttributes = new List<Attribute>();
-    private bool follow = false;
+    List<Attribute.AttributeKey> detailsTabKeys = new List<Attribute.AttributeKey>();
 
 	// Use this for initialization
 	void Start () {
-        HideInspectionPanel();	
+        Close();
+        HideAllTabs();
+        detailsTabKeys = new List<Attribute.AttributeKey>()
+        {
+             Attribute.AttributeKey.species,
+             Attribute.AttributeKey.age,
+             Attribute.AttributeKey.hunger,
+             Attribute.AttributeKey.status,
+             Attribute.AttributeKey.preferredBiome,
+             Attribute.AttributeKey.diet
+        };
 	}
 	
 	// Update is called once per frame
 	void Update () {
         MoveInspectionPanel();
-        UpdateAttributeDetails();
+        UpdateTab_Details();
+        UpdateTab_Attributes();
 	}
 
-    public void ShowInspectionPanel(bool follow, GameObject targetInspectable)
+    public void Open(GameObject target)
     {
+        if(inspectionPanel.gameObject.activeSelf)
+        {
+            Close();
+        }
+
         inspectionPanel.gameObject.SetActive(true);
-        this.follow = follow;
-        this.targetGO = targetInspectable;
-        this.targetAttributes = targetInspectable.GetComponent<IInspectable>().GetAttributes();
-        CreateAttributeDetails();
+        this.target = target;
+        this.targetAttributes = target.GetComponent<Entity>().GetAttributes;
+        ShowTab_Details();
     }
 
-    public void HideInspectionPanel()
+    public void Close()
     {
         inspectionPanel.gameObject.SetActive(false);
     }
 
-    private void MoveInspectionPanel()
+    private void HideAllTabs()
     {
-        if (!inspectionPanel.gameObject.activeSelf) return;
-        if (!follow) return;
-        if (!targetGO) return;
-
-        Vector2 screenPosition = Camera.main.WorldToScreenPoint(targetGO.transform.position);
-        screenPosition -= inspectionPanel.sizeDelta / 2;
-        Vector2 uiPosition = Vector2.zero;
-        uiPosition.x = Mathf.Lerp(16, (GetComponent<RectTransform>().sizeDelta.x - inspectionPanel.sizeDelta.x - 16), screenPosition.x / Screen.width);
-        uiPosition.y = Mathf.Lerp(16, (GetComponent<RectTransform>().sizeDelta.y - inspectionPanel.sizeDelta.y - 16), screenPosition.y / Screen.height);
-        //uiPosition.x -= inspectionPanel.sizeDelta.x / 2 + 16;
-        //uiPosition.y -= inspectionPanel.sizeDelta.y / 2 + 16;
-        //uiPosition.x = Mathf.Clamp(uiPosition.x, 16, GetComponent<RectTransform>().sizeDelta.x - inspectionPanel.sizeDelta.x - 16);
-        //uiPosition.y = Mathf.Clamp(uiPosition.y, 16, GetComponent<RectTransform>().sizeDelta.y - inspectionPanel.sizeDelta.y - 16);
-
-        inspectionPanel.anchoredPosition = Vector2.Lerp(inspectionPanel.anchoredPosition, uiPosition, 15 * Time.deltaTime);
+        tab_Details.SetActive(false);
+        tab_Attributes.SetActive(false);
     }
 
-    private void CreateAttributeDetails()
+    public void ShowTab_Details()
     {
-        for (int i = 0; i < attributePairPanel.childCount; i++)
-        {
-            Destroy(attributePairPanel.GetChild(i).gameObject);
-        }        
+        if (target == null) return;
+        if (targetAttributes.Count <= 0) return;
 
-        foreach (Attribute a in targetAttributes)
-        {            
-            if(a.Key == Attribute.AttributeKey.name)
+        HideAllTabs();
+        tab_Details.SetActive(true);
+
+        Debug.Log("ShowTab_Details");
+
+        for (int i = 0; i < detailsTab_PairsPanel.childCount; i++)
+        {
+            Destroy(detailsTab_PairsPanel.GetChild(i).gameObject);
+        }
+
+        List<Attribute> attributesToDisplay = new List<Attribute>();
+
+        if (targetAttributes.FindAttributeByKey(Attribute.AttributeKey.species) != null)
+        {
+            attributesToDisplay.Add(targetAttributes.FindAttributeByKey(Attribute.AttributeKey.species));
+        }
+
+        if (targetAttributes.FindAttributeByKey(Attribute.AttributeKey.age) != null)
+        {
+            attributesToDisplay.Add(targetAttributes.FindAttributeByKey(Attribute.AttributeKey.age));
+        }
+
+        if (targetAttributes.FindAttributeByKey(Attribute.AttributeKey.hunger) != null)
+        {
+            attributesToDisplay.Add(targetAttributes.FindAttributeByKey(Attribute.AttributeKey.hunger));
+        }
+
+        if (targetAttributes.FindAttributeByKey(Attribute.AttributeKey.diet) != null)
+        {
+            attributesToDisplay.Add(targetAttributes.FindAttributeByKey(Attribute.AttributeKey.diet));
+        }
+
+        if (targetAttributes.FindAttributeByKey(Attribute.AttributeKey.preferredBiome) != null)
+        {
+            attributesToDisplay.Add(targetAttributes.FindAttributeByKey(Attribute.AttributeKey.preferredBiome));
+        }
+
+        if (targetAttributes.FindAttributeByKey(Attribute.AttributeKey.status) != null)
+        {
+            attributesToDisplay.Add(targetAttributes.FindAttributeByKey(Attribute.AttributeKey.status));
+        }
+
+        foreach (Attribute attribute in attributesToDisplay)
+        {
+            if (attribute.Key == Attribute.AttributeKey.name)
             {
-                nameInputField.text = a.GetValue();
+                nameInputField.text = attribute.GetValue();
                 continue;
             }
             GameObject go = Instantiate(Resources.Load("UI\\TextAttribute_Prefab")) as GameObject;
-            go.transform.parent = attributePairPanel;
-            go.transform.Find("Name").GetComponent<Text>().text = a.DisplayName.ToString();
-            go.transform.Find("Value").GetComponent<Text>().text = a.GetValue();
-        }        
+            go.transform.parent = detailsTab_PairsPanel;
+            go.transform.Find("Name").GetComponent<Text>().text = attribute.DisplayName.ToString();
+            go.transform.Find("Value").GetComponent<Text>().text = attribute.GetValue();
+        }
     }
 
-    private void UpdateAttributeDetails()
+    public void UpdateTab_Details()
     {
-        if (!inspectionPanel.gameObject.activeSelf) return;
-        if (!follow) return;
-        if (!targetGO) return;
+        if (target == null) return;
+        if (targetAttributes.Count <= 0) return;
+
+        if (!tab_Details.activeSelf) return;
 
         if (EventSystem.current.currentSelectedGameObject != nameInputField.gameObject)
             nameInputField.text = targetAttributes.FindValueByName("Name");
 
-        for (int i = 0; i < attributePairPanel.childCount; i++)
+        for (int i = 0; i < detailsTab_PairsPanel.childCount; i++)
         {
-            string name = attributePairPanel.GetChild(i).Find("Name").GetComponent<Text>().text;
+            string name = detailsTab_PairsPanel.GetChild(i).Find("Name").GetComponent<Text>().text;
 
             if (targetAttributes.FindValueByName(name) == "Attribute Not Found")
             {
@@ -98,8 +149,107 @@ public class InspectionCanvas : MonoBehaviour {
                 continue;
             }
 
-            attributePairPanel.GetChild(i).Find("Value").GetComponent<Text>().text = targetAttributes.FindValueByName(name);
+            detailsTab_PairsPanel.GetChild(i).Find("Value").GetComponent<Text>().text = targetAttributes.FindValueByName(name);
         }
+    }
+
+    public void ShowTab_Attributes()
+    {
+        if (target == null) return;
+        if (targetAttributes.Count <= 0) return;
+
+        HideAllTabs();
+        tab_Attributes.SetActive(true);
+
+        Debug.Log("ShowTab_Details");
+
+        for (int i = 0; i < attributesTab_PairsPanel.childCount; i++)
+        {
+            Destroy(attributesTab_PairsPanel.GetChild(i).gameObject);
+        }
+
+        List<Attribute> attributesToDisplay = new List<Attribute>();
+
+        foreach (Attribute attribute in targetAttributes)
+        {
+            //if (attribute.Key != Attribute.AttributeKey.species)
+            //{
+            //    if (attribute.Key != Attribute.AttributeKey.age)
+            //    {
+            //        if (attribute.Key != Attribute.AttributeKey.status)
+            //        {
+            //            if (attribute.Key != Attribute.AttributeKey.preferredBiome)
+            //            {
+            //                if (attribute.Key != Attribute.AttributeKey.hunger)
+            //                {
+            //                    attributesToDisplay.Add(attribute);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+            if(detailsTabKeys.Contains(attribute.Key))
+            {
+                continue;
+            }
+
+            attributesToDisplay.Add(attribute);
+        }
+
+        foreach (Attribute attribute in attributesToDisplay)
+        {
+            if (attribute.Key == Attribute.AttributeKey.name)
+            {
+                nameInputField.text = attribute.GetValue();
+                continue;
+            }
+            GameObject go = Instantiate(Resources.Load("UI\\TextAttribute_Prefab")) as GameObject;
+            go.transform.parent = attributesTab_PairsPanel;
+            go.transform.Find("Name").GetComponent<Text>().text = attribute.DisplayName.ToString();
+            go.transform.Find("Value").GetComponent<Text>().text = attribute.GetValue();
+        }
+    }
+
+    private void UpdateTab_Attributes()
+    {
+        if (target == null) return;
+        if (targetAttributes.Count <= 0) return;
+
+        if (!tab_Attributes.activeSelf) return;
+
+        if (EventSystem.current.currentSelectedGameObject != nameInputField.gameObject)
+            nameInputField.text = targetAttributes.FindValueByName("Name");
+
+        for (int i = 0; i < attributesTab_PairsPanel.childCount; i++)
+        {
+            string name = attributesTab_PairsPanel.GetChild(i).Find("Name").GetComponent<Text>().text;
+
+            if (targetAttributes.FindValueByName(name) == "Attribute Not Found")
+            {
+                Debug.LogError("Error: Attribute Not Found", this);
+                continue;
+            }
+
+            attributesTab_PairsPanel.GetChild(i).Find("Value").GetComponent<Text>().text = targetAttributes.FindValueByName(name);
+        }
+    }
+
+    private void MoveInspectionPanel()
+    {
+        if (!inspectionPanel.gameObject.activeSelf) return;        
+        if (!target) return;
+
+        // The position in screen pixels of the target
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(target.transform.position);
+
+        Vector2 screenToUIPosition = new Vector2(0, 0);
+        screenToUIPosition.x = Mathf.Lerp(0, GetComponent<RectTransform>().sizeDelta.x, screenPosition.x / Screen.width ) - 32;
+        screenToUIPosition.y = Mathf.Lerp(0, GetComponent<RectTransform>().sizeDelta.y, screenPosition.y / Screen.height) - 32;
+        screenToUIPosition.x = Mathf.Clamp(screenToUIPosition.x, 448.0f + 48.0f, 1920.0f - 48.0f);
+        screenToUIPosition.y = Mathf.Clamp(screenToUIPosition.y, 256.0f + 48.0f, 1080.0f - 48.0f);
+
+        inspectionPanel.anchoredPosition = Vector2.Lerp(inspectionPanel.anchoredPosition, screenToUIPosition, 15 * Time.deltaTime);
     }
 
     public void UpdateEntityName()

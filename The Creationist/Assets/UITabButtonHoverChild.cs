@@ -29,12 +29,16 @@ public class UITabButtonHoverChild : UITabButton {
         if (state)
         {
             GetComponent<Image>().color = selectedColour;
-            targetImage.color = targetImageDefaultColour;
+
+            if (targetImage != null)
+                targetImage.color = targetImageDefaultColour;
         }
         else
         {
             GetComponent<Image>().color = colour;
-            targetImage.color = targetImageDefaultColour;
+
+            if (targetImage != null)
+                targetImage.color = targetImageDefaultColour;
         }
     }
 
@@ -58,12 +62,14 @@ public class UITabButtonHoverChild : UITabButton {
     protected override void PointerEnter()
     {
         if (!isActiveTabButton)
-            targetImage.color = onHoverColour;
+            if (targetImage != null)
+                targetImage.color = onHoverColour;
     }
 
     protected override void PointerExit()
     {
         if (!isActiveTabButton)
-            targetImage.color = targetImageDefaultColour;
+            if (targetImage != null)
+                targetImage.color = targetImageDefaultColour;
     }
 }

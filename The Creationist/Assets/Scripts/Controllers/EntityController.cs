@@ -38,8 +38,7 @@ public class EntityController : MonoBehaviour {
 
         foreach (UnityEngine.Object a in animals)
         {
-            TextAsset b = a as TextAsset;
-            //Debug.Log(a.ToString());
+            TextAsset b = a as TextAsset;            
             EntityData data = JsonUtility.FromJson<EntityData>(a.ToString());
             entities.Add(data);
         }

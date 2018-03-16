@@ -63,6 +63,7 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
     {
         MonitorSize();
         MonitorAge();
+        MonitorHunger();
     }
 
     protected virtual void AddInitialAttributes()
@@ -73,7 +74,7 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
             new Attribute(Attribute.AttributeKey.name, EntityController.singleton.GetRandomAnimalName() + " the " + _data.InfantName, true),
             new Attribute(Attribute.AttributeKey.age, 1.0f, false),
             new Attribute(Attribute.AttributeKey.status, "Idling", false),
-            new Attribute(Attribute.AttributeKey.size, 1.0f, false),                       
+            new Attribute(Attribute.AttributeKey.size, 1.0f, false)            
         };
 
         foreach (Attribute.AttributeJSONData data in _data.InitialAttributes)
@@ -109,7 +110,7 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
 
         radialOptions.Add(new RadialOptionMenu(() =>
         {
-            GameObject.FindObjectOfType<InspectableController>().OnShowInspectionPanel(this.gameObject);
+            GameObject.FindObjectOfType<InspectableController>().OnStartInspect(this.gameObject);
         }, Resources.Load<Sprite>("Sprites\\RadialOption_Inspect")));
     }
 
@@ -140,6 +141,14 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
                 case "Mating_Environment":
                     gameObject.AddComponent<AI_Mating_Environment>();
                     break;
+
+                case "Hunger_Grazing":
+                    gameObject.AddComponent<AI_Hunger_Grazing>();
+                    break;
+
+                case "Hunger_Hunter":
+                    gameObject.AddComponent<AI_Hunger_Hunter>();
+                    break;
             }
         }
     }
@@ -165,7 +174,7 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
     {
         age += GameTime.singleton.DeltaTime;
 
-        if (age >= _data.AverageLifetime * 0.000010f)
+        if (age >= _data.AverageLifetime * 0.10f)
         {
             isOfMatingAge = true;
         }
@@ -174,6 +183,15 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
             EntityPool.singleton.Destroy(_data.EntityDataID, this.gameObject);
 
         Attributes.Update(Attribute.AttributeKey.age, age);
+    }
+
+    protected virtual void MonitorHunger()
+    {
+        if (attributes.FindAttributeByKey(Attribute.AttributeKey.hunger) == null) return;
+        float currentHunger = attributes.FindAttributeByKey(Attribute.AttributeKey.hunger).FloatValue;
+        currentHunger = Mathf.Clamp(currentHunger - GameTime.singleton.DeltaTime * _data.HungerDecreaseModifer, 0.0f, 1.0f);
+
+        attributes.Update(Attribute.AttributeKey.hunger, currentHunger);
     }
 
     GameObject IInspectable.Target { get { if (gameObject != null) return gameObject; else return null; } }

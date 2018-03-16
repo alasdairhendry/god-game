@@ -48,7 +48,7 @@ public class TerrainInspector : MonoBehaviour {
     {
         float forestCount = 0.0f;
         float grasslandsCount = 0.0f;
-        float tundraCount = 0.0f;
+        float tundraCount = 0.0f;        
 
         float forestValue = 0.0f;
         float grasslandsValue = 0.0f;

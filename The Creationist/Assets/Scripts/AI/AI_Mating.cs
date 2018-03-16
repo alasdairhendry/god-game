@@ -93,13 +93,13 @@ public class AI_Mating : AI {
     //public virtual void DisableMating() { allowMating = false; }    
 
     [SerializeField] protected float matingCounter = 0.0f;
-    protected bool shouldFindMate = false;
-    protected bool hasTargetMate = false;
-    protected bool isMating = false;
+   [SerializeField] protected bool shouldFindMate = false;
+   [SerializeField] protected bool hasTargetMate = false;
+   [SerializeField] protected bool isMating = false;
 
-    protected bool isTargetedByAnother = false;
+   [SerializeField] protected bool isTargetedByAnother = false;
 
-    protected Entity targetMate;
+   [SerializeField] protected Entity targetMate;
 
     protected override void Start()
     {
@@ -199,7 +199,7 @@ public class AI_Mating : AI {
     }
 
     protected virtual void SetMate(Entity mate)
-    {
+    {        
         targetMate = mate;
         hasTargetMate = true;
     }

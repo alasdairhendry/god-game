@@ -59,11 +59,11 @@ public class InspectableController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (inspectable == null) return;
-            OnHideInspectionPanel();
+            OnStopInspect();
         }
     }
 
-    public void OnShowInspectionPanel(GameObject inspectable)
+    public void OnStartInspect(GameObject inspectable)
     {
         if (this.inspectable != null)
         {
@@ -75,12 +75,13 @@ public class InspectableController : MonoBehaviour {
 
         this.inspectable = inspectable;
         this.inspectable.GetComponent<IInspectable>().OnStartInspect();
-        FindObjectOfType<InspectionCanvas>().ShowInspectionPanel(inspectable.GetComponent<IInspectable>().UIFollow, inspectable);
+        //FindObjectOfType<InspectionCanvas>().ShowInspectionPanel(inspectable.GetComponent<IInspectable>().UIFollow, inspectable);
+        FindObjectOfType<InspectionCanvas>().Open(inspectable);
     }
 
-    private void OnHideInspectionPanel()
+    private void OnStopInspect()
     {
-        FindObjectOfType<InspectionCanvas>().HideInspectionPanel();
+        FindObjectOfType<InspectionCanvas>().Close();
         if (inspectable != null)
         {
             if (inspectable.GetComponent<IInspectable>().Target != null)

@@ -36,6 +36,7 @@ public class AI : MonoBehaviour {
 
     protected virtual void OnDestroy()
     {
+        OnFinish();
         GetComponent<AIController>().RemoveAIComponent(this);
     }
 }

@@ -18,12 +18,13 @@
 	"initialAttributes":
 	[
 		{"key":"preferredBiome","type":"string","value":"Grasslands", "modifiable":false},
-		{"key":"temperment","type":"string","value":"social", "modifiable":false}
+		{"key":"temperment","type":"string","value":"Social", "modifiable":false}
 	],
 
 	"initialAI":
 	[
 		"Movement_DefaultRoaming",
-		"Mating_Animal"
+		"Mating_Animal",
+		"Hunger_Grazing"
 	]
 }

@@ -17,9 +17,8 @@
 
 	"initialAttributes":
 	[		
-		{"key":"preferredBiome","type":"string","value":"Grasslands", "modifiable":false},
-		{"key":"preferredBiome","type":"string","value":"Tundra", "modifiable":false},
-		{"key":"temperment","type":"string","value":"aggressive", "modifiable":false}
+		{"key":"preferredBiome","type":"string","value":"Forest", "modifiable":false},		
+		{"key":"temperment","type":"string","value":"Aggressive", "modifiable":false}
 	],
 
 	"initialAI":

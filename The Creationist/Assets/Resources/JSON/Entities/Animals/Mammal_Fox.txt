@@ -6,12 +6,12 @@
 	"description":"A Fluffy Boi",
 	"costToBuy":-1,
 	"rewardForBreed":50,
-	"averageLifetime":8.0,
+	"averageLifetime":1.25,
 	"movementSpeed":1,
 	"roamingRange": 7.5,
-	"averageMateDelay":108.0,
-	"mateChance":1.0,
-	"fertility":1.0,
+	"averageMateDelay":128.0,
+	"mateChance":0.7,
+	"fertility":0.8,
 	"matingRange":30.0,
 	"isSelective":false,
 	"isUnlocked":false,
@@ -19,12 +19,14 @@
 	"initialAttributes":
 	[
 		{"key":"preferredBiome","type":"string","value":"Tundra", "modifiable":false},
-		{"key":"temperment","type":"string","value":"aggressive", "modifiable":false}
+		{"key":"temperment","type":"string","value":"Aggressive", "modifiable":false},
+		{"key":"diet","type":"string","value":"Sheep", "modifiable":false}
 	],
 
 	"initialAI":
 	[
 		"Movement_DefaultRoaming",
-		"Mating_Animal"
+		"Mating_Animal",
+		"Hunger_Hunter"
 	]
 }

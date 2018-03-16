@@ -24,7 +24,9 @@ public class Attribute {
         [Description("Biome Grasslands")] matingBiomeGrasslands,
         [Description("Biome Tundra")] matingBiomeTundra,
         [Description("Movement Speed")] movementSpeedModifer,
-        [Description("Temperment")] temperment
+        [Description("Temperment")] temperment,
+        [Description("Hunger")] hunger,
+        [Description("Diet")] diet
     }
 
     [SerializeField] private AttributeKey key;
@@ -102,6 +104,9 @@ public class Attribute {
     {
         if (key == AttributeKey.age)
             return GameTime.singleton.DaysToTime(float.Parse(value));
+
+        if (type == AttributeType.FLOAT)
+            return float.Parse(value).ToString("0.00");
 
         return value;
     }

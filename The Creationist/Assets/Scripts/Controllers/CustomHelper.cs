@@ -161,4 +161,15 @@ public static class CustomHelper {
         }
         else return "List Empty";
     }
+
+    public static Preferences.Preference GetPreference(this Preferences.PreferenceData data, PreferenceKey key)
+    {
+        foreach (Preferences.Preference item in data.preferences)
+        {
+            if (key == item.key)
+                return item;
+        }
+
+        return null;
+    }
 }

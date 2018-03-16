@@ -87,6 +87,7 @@ public class GameTime : MonoBehaviour {
 
         while(x < seconds)
         {
+            //Debug.Log("Yielding ");
             x += Time.deltaTime * gameTimeMultiplier;
             yield return null;
         }
