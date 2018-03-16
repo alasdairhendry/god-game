@@ -26,6 +26,7 @@ public class EntityController : MonoBehaviour {
 
     private GameObject gameObjectBeingPlaced;
     private EntityData dataBeingPlaced;
+    private CameraOrbitMotion cameraOrbitMotion;
 
     private void Start()
     {
@@ -43,13 +44,14 @@ public class EntityController : MonoBehaviour {
             entities.Add(data);
         }
 
+        cameraOrbitMotion = FindObjectOfType<CameraOrbitMotion>();
+
         AssignEntityIDS();
         AssignEntityDataStubs();
         StartCoroutine(SpawnQueuedEntities());
         Preload();
 
-
-    }
+    }    
 
     private void AssignEntityIDS()
     {
@@ -98,6 +100,11 @@ public class EntityController : MonoBehaviour {
             {
                 PlaceEntity();
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            BeginPlacingEntity(ReturnEntityDataByName("Cow"));
         }
     }
         
@@ -154,7 +161,7 @@ public class EntityController : MonoBehaviour {
         {
             GameObject go = EntityPool.singleton.Instantiate(entityData.EntityDataID);
             Vector3 direction = (Vector3.zero - worldPosition).normalized;
-            go.transform.position = worldPosition - (direction * Mathf.Lerp(1.5f, 20.0f, Mathf.InverseLerp(FindObjectOfType<CameraOrbitMotion>().ZoomLimit, 1.0f, FindObjectOfType<CameraOrbitMotion>().ZoomLevel)));
+            go.transform.position = worldPosition - (direction * Mathf.Lerp(1.5f, 20.0f, Mathf.InverseLerp(cameraOrbitMotion.ZoomLimit, 1.0f, cameraOrbitMotion.ZoomLevel)));
             go.transform.parent = GravityAttractor.singleton.transform.Find("Entities");
 
             go.GetComponent<Entity>().Initialize(entityData, segment);

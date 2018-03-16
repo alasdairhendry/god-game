@@ -14,7 +14,6 @@ public class ToolbarCanvas : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        currentTimeText.text = GameTime.singleton.DaysToTime(GameTime.singleton.CurrentTimeDays);
-        //Debug.Log(GameTime.singleton.CurrentTimeDays);
+        currentTimeText.text = GameTime.singleton.DaysToTime(GameTime.singleton.CurrentTimeDays);        
 	}
 }

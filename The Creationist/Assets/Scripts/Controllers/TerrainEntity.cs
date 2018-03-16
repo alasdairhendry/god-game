@@ -189,8 +189,7 @@ public class TerrainEntity : MonoBehaviour {
 
                 while (i < nodes.Count)
                 {
-                    nodes[i].CheckColour();
-                    Debug.Log("Checking Node " + i);
+                    nodes[i].CheckColour();                    
                     i++;
                     yield return null;
                 }
@@ -210,8 +209,7 @@ public class TerrainEntity : MonoBehaviour {
 
                 while (i < nodes.Count)
                 {
-                    vertexColours[i] = nodes[i].GetColor();
-                    Debug.Log("Colouring Node " + i);
+                    vertexColours[i] = nodes[i].GetColor();                    
                     i++;
                     yield return null;
                 }

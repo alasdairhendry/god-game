@@ -73,8 +73,7 @@ public class InteractionCanvas : MonoBehaviour {
                     return;
                 }
                 else
-                {
-                    //Debug.Log("Boop");
+                {                    
                     if (activeOptions.Count > 0)
                         activeOptions[hoveredIndex].OnClick();
                     hoveredIndex = -1;                    

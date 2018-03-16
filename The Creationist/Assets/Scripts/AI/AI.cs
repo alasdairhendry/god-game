@@ -7,7 +7,7 @@ public class AI : MonoBehaviour {
     protected Entity entity;
     protected EntityData entityData;
     protected AIController aiController;
-    protected bool isActiveAI = false;      // Are we the active AI for this component?
+    [SerializeField] protected bool isActiveAI = false;      // Are we the active AI for this component?
 
     // Use this for initialization
     protected virtual void Start() {

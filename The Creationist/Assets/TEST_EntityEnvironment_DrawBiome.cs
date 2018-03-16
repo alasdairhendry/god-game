@@ -23,8 +23,7 @@ public class TEST_EntityEnvironment_DrawBiome : MonoBehaviour {
 
         if (initialRange >= maxRange)
             initialRange = maxRange;
-
-        //Debug.Log(FindPointWithinRange(initialRange, transform.position));
+        
         StartCoroutine(Find());
 	}
 
@@ -49,19 +48,10 @@ public class TEST_EntityEnvironment_DrawBiome : MonoBehaviour {
             if (Vector3.Distance(from, meshT.TransformPoint(mesh.vertices[i])) < range)
             {
                 eligibleLocations.Add(meshT.TransformPoint(mesh.vertices[i]));
-            }
-
-            Debug.Log("WOrking");
+            }            
 
             i++;
             yield return null;
         }
-
-        Debug.Log(eligibleLocations[UnityEngine.Random.Range(0, eligibleLocations.Count)]);
-
-        //if (eligibleLocations.Count > 0)
-        //    return eligibleLocations[UnityEngine.Random.Range(0, eligibleLocations.Count)];
-        //else
-        //    return from;
     }
 }

@@ -19,20 +19,6 @@ public class EntityPickupControl : MonoBehaviour {
 
         if(Input.GetMouseButtonDown(0))
         {
-            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //RaycastHit hit;
-
-            //if (Physics.Raycast(ray, out hit))
-            //{
-            //    if (hit.collider.gameObject.tag == "TerrainSegment")
-            //    {
-            //        GetComponent<Entity>().TerrainSegment = TerrainEntity.singleton.FindSegment(hit.collider.gameObject);
-            //        Drop(hit.point);
-            //        Debug.Log(hit.point);
-            //        Destroy(this);
-            //    }
-            //}
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit[] hits;
 

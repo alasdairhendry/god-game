@@ -33,9 +33,9 @@ public class AIController : MonoBehaviour {
             AI _ai = GetPriority();
             if (_ai != null)
             {
+                Logger.LogSelected("Highest Priority: " + _ai.GetType(), gameObject, this);
                 _ai.Begin();
-            }
-            //else { Debug.LogError("AI is Null"); }
+            }            
         }
     }
 

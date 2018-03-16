@@ -87,7 +87,7 @@ public class AI_Hunger_Hunter : AI_Hunger {
 
         while(true)
         {
-            if (!isActiveAI) { Debug.Log("Not Active"); OnFinish(); yield break; }
+            if (!isActiveAI) { OnFinish(); yield break; }
 
             if (targetEntity == null)
             {
@@ -122,14 +122,12 @@ public class AI_Hunger_Hunter : AI_Hunger {
             else    // We are close to the target
             {
                 if(timeSinceLastAttack >= 1.5f)
-                {
-                    Debug.Log("ATTACK");
+                {                    
                     targetHealth -= 0.4f;
                     timeSinceLastAttack = 0.0f;
 
                     if(targetHealth <= 0)
-                    {
-                        Debug.Log("TARGET DEAD");
+                    {                        
                         entity.GetAttributes.Update(Attribute.AttributeKey.hunger, 1.0f);
                         EntityPool.singleton.Destroy(targetEntity.GetData.EntityDataID, targetEntity.gameObject);
                         OnFinish();
@@ -144,14 +142,12 @@ public class AI_Hunger_Hunter : AI_Hunger {
 
     private void Retry()
     {        
-        if(retryCount >= 3)
+        if(retryCount >= 0)
         {
             // TODO - Add negative buff Unhappy because no food?????
             OnFinish();
             return;
-        }
-
-        Debug.Log("RETRYING");
+        }        
 
         retryCount++;
         OnStart();

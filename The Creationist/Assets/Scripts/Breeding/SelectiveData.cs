@@ -19,83 +19,17 @@ public class SelectiveData {
 
     public bool Check(Entity entity)
     {
-        //Entity primaryEntity;
-        //Entity secondaryEntity;
-
-        //Debug.Log("Checking Resulting Entity " + resultingEntityName);
-
-        //if(entityA.GetData.Name == breedingEntityName && entityB.GetData.Name == secondaryEntityName)
-        //{
-        //    primaryEntity = entityA;
-        //    secondaryEntity = entityB;
-        //}
-        //else if (entityA.GetData.Name == secondaryEntityName && entityB.GetData.Name == breedingEntityName)
-        //{
-        //    primaryEntity = entityB;
-        //    secondaryEntity = entityA;
-        //}
-        //else
-        //{
-        //    // The name dont match, these two species cannot interbreed
-        //    return false;
-        //}
-
         for (int i = 0; i < breedingRequirements.Count; i++)
         {
-            //Debug.Log("Checking Primary Requirements " + i);
             BreedingPartnerRequirement requirement = breedingRequirements[i];
-            Attribute attribute = entity.GetAttributes.FindAttributeByKey(requirement.AttributeKey);
-            Debug.Log("Checking Attribute " + entity.GetData.Species + " - " + attribute.Key + " - " + attribute.Type + " - " + attribute.GetValue());
-
-            //if (attribute.Type != requirement.AttributeType) { Debug.LogError("Invalid Attribute Match " + breedingEntityName + " + " + secondaryEntityName + ": Result = " + resultingEntityName); return false; } // The attribute and requirement types do not match, an error made in the inspector, so notify ourselves so we can correct it 
-            if (attribute == null) { Debug.LogError("Mate Does not have required attribute"); return false; }   // The mate does not have a required Attribute, therefore this breed cannot continue
+            Attribute attribute = entity.GetAttributes.FindAttributeByKey(requirement.AttributeKey);            
+            
+            if (attribute == null) { return false; }   // The mate does not have a required Attribute, therefore this breed cannot continue
 
             // This mate has the required attribute, so we need to check the value
             if (!CheckValue(requirement, attribute))
                 return false;
-        }
-
-        //for (int i = 0; i < secondaryBreedingRequirements.Count; i++)
-        //{
-        //    Debug.Log("Checking Secondary Requirements " + i);
-        //    BreedingPartnerRequirement requirement = secondaryBreedingRequirements[i];
-        //    Attribute attribute = secondaryEntity.GetAttributes.FindAttributeByKey(requirement.AttributeKey);
-
-        //    if (attribute.Type != requirement.AttributeType) { Debug.LogError("Invalid Attribute Match " + breedingEntityName + " + " + secondaryEntityName + ": Result = " + resultingEntityName); return false; } // The attribute and requirement types do not match, an error made in the inspector, so notify ourselves so we can correct it 
-        //    if (attribute == null) return false;    // The mate does not have a required Attribute, therefore this breed cannot continue
-
-        //    // This mate has the required attribute, so we need to check the value
-        //    if (!CheckValue(requirement, attribute))
-        //        return false;
-        //}
-
-        //return false;
-
-        //foreach (BreedingPartnerRequirement requirement in primaryBreedingRequirements)
-        //{
-        //    Attribute attribute = primaryEntity.GetAttributes.FindAttributeByKey(requirement.AttributeKey);
-
-        //    if (attribute.Type != requirement.AttributeType) { Debug.LogError("Invalid Attribute Match " + primaryEntityName + " + " + secondaryEntityName + ": Result = " + resultingEntityName); return false; } // The attribute and requirement types do not match, an error made in the inspector, so notify ourselves so we can correct it 
-        //    if (attribute == null) return false;    // The mate does not have a required Attribute, therefore this breed cannot continue
-
-        //    // This mate has the required attribute, so we need to check the value
-        //    if (CheckValue(requirement, attribute))
-        //        continue;
-        //    else return false;
-        //}
-
-        //foreach (BreedingPartnerRequirement requirement in secondaryBreedingRequirements)
-        //{
-        //    Attribute attribute = secondaryEntity.GetAttributes.FindAttributeByKey(requirement.AttributeKey);
-
-        //    if (attribute.Type != requirement.AttributeType) { Debug.LogError("Invalid Attribute Match " + primaryEntityName + " + " + secondaryEntityName + ": Result = " + resultingEntityName); return false; } // The attribute and requirement types do not match, an error made in the inspector, so notify ourselves so we can correct it 
-        //    if (attribute == null) return false;    // The mate does not have a required Attribute, therefore this breed cannot continue
-
-        //    // This mate has the required attribute, so we need to check the value
-        //    if (CheckValue(requirement, attribute))
-        //        continue;
-        //    else return false;
-        //}
+        }        
 
         // We have made it this far, so all the attribute requirements have been met. Allow species to be created
         return true;
@@ -125,12 +59,10 @@ public class SelectiveData {
 
         switch(requirement.AttributeOperator)
         {
-            case BreedingPartnerRequirement.AttrOperator.GreaterThanOrEqual:
-                Debug.LogError("Invalid Operator " + breedingEntityName + ": Result = " + resultingEntityName);
+            case BreedingPartnerRequirement.AttrOperator.GreaterThanOrEqual:                
                 return false;
 
-            case BreedingPartnerRequirement.AttrOperator.GreaterThan:
-                Debug.LogError("Invalid Operator " + breedingEntityName + ": Result = " + resultingEntityName);
+            case BreedingPartnerRequirement.AttrOperator.GreaterThan:                
                 return false;
 
             case BreedingPartnerRequirement.AttrOperator.EqualTo:
@@ -139,12 +71,10 @@ public class SelectiveData {
             case BreedingPartnerRequirement.AttrOperator.NotEqualTo:
                 return (value == reqValue);
 
-            case BreedingPartnerRequirement.AttrOperator.LessThan:
-                Debug.LogError("Invalid Operator " + breedingEntityName + ": Result = " + resultingEntityName);
+            case BreedingPartnerRequirement.AttrOperator.LessThan:                
                 return false;
 
-            case BreedingPartnerRequirement.AttrOperator.LessThanOrEqual:
-                Debug.LogError("Invalid Operator " + breedingEntityName + ": Result = " + resultingEntityName);
+            case BreedingPartnerRequirement.AttrOperator.LessThanOrEqual:                
                 return false;
 
             default: return false;
@@ -202,8 +132,7 @@ public class SelectiveData {
             case BreedingPartnerRequirement.AttrOperator.LessThan:
                 return (value < reqValue);
 
-            case BreedingPartnerRequirement.AttrOperator.LessThanOrEqual:
-                Debug.Log(value <= reqValue);
+            case BreedingPartnerRequirement.AttrOperator.LessThanOrEqual:                
                 return (value <= reqValue);
 
             default: return false;

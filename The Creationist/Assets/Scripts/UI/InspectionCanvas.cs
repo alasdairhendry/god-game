@@ -74,9 +74,7 @@ public class InspectionCanvas : MonoBehaviour {
         if (targetAttributes.Count <= 0) return;
 
         HideAllTabs();
-        tab_Details.SetActive(true);
-
-        Debug.Log("ShowTab_Details");
+        tab_Details.SetActive(true);        
 
         for (int i = 0; i < detailsTab_PairsPanel.childCount; i++)
         {
@@ -159,9 +157,7 @@ public class InspectionCanvas : MonoBehaviour {
         if (targetAttributes.Count <= 0) return;
 
         HideAllTabs();
-        tab_Attributes.SetActive(true);
-
-        Debug.Log("ShowTab_Details");
+        tab_Attributes.SetActive(true);        
 
         for (int i = 0; i < attributesTab_PairsPanel.childCount; i++)
         {

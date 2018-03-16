@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class AI_Mating_Animal : AI_Mating {
@@ -12,19 +13,31 @@ public class AI_Mating_Animal : AI_Mating {
     protected override void Update()
     {
         base.Update();
-
-        if (isActiveAI) MoveToMate();
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        if (isActiveAI) MoveToMate();
     }
 
     public override float GetPriority()
     {
-        if (shouldFindMate) return 1.0f;
-        else return 0.0f;
+        if (shouldFindMate)
+        {
+            if (isTargetedByAnother)
+                return 0.0f;
+
+            Logger.LogSelected("Get Priority 01", gameObject,this );
+            return 1.0f;
+        }
+
+        else
+        {
+            Logger.LogSelected("Get Priority 00", gameObject,this);
+            return 0.0f;
+        }
     }
 
     public override void Begin()
@@ -97,26 +110,33 @@ public class AI_Mating_Animal : AI_Mating {
     protected override void MoveToMate()
     {
         if(shouldFindMate)
-        {
-            Debug.Log("MoveToMate - shouldFindMate");
+        {            
             if(hasTargetMate)
-            {
-                Debug.Log("MoveToMate - hasTargetMate");
+            {                
                 if (targetMate != null)
                 {
                     if (targetMate.gameObject.activeSelf)
-                    {
-                        Debug.Log("MoveToMate - targetMate != null");
+                    {                        
+                        //GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + (moveDirection * (base.entityData.MovementSpeed)) * (Time.deltaTime * GameTime.singleton.GameTimeMultipler));
+                        //GetComponent<Rigidbody>().MovePosition(transform.position + moveDirection);
 
-                        Vector3 moveDirection = (targetMate.transform.position - GetComponent<Rigidbody>().position).normalized;
-                        GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + moveDirection * (base.entityData.MovementSpeed * 1.5f) * Time.deltaTime * GameTime.singleton.GameTimeMultipler);
+                        //Vector3 moveDirection = (targetMate.transform.position - transform.position).normalized;
+                        //transform.position = Vector3.Lerp(transform.position, transform.position + moveDirection, Time.deltaTime);                       
 
-                        if (Vector3.Distance(targetMate.transform.position, base.entity.transform.position) <= 3.5f)
+                        Logger.LogSelected("Moving To Mate", this.gameObject, this);
+
+                        if (Vector3.Distance(targetMate.transform.position, base.entity.transform.position) <= 1.0f)
                         {
                             if (!isMating)
                             {
                                 StartCoroutine(Mate());
+                                Debug.Log("Close enough to start mating");
                             }
+                        }
+                        else
+                        {
+                            Vector3 moveDirection = (targetMate.transform.position - GetComponent<Rigidbody>().position).normalized;
+                            GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + moveDirection * entityData.MovementSpeed * Time.deltaTime * GameTime.singleton.GameTimeMultipler);
                         }
 
                         if (targetMate.IsPickedUp)
@@ -185,16 +205,14 @@ public class AI_Mating_Animal : AI_Mating {
                 OnMateComplete();
             }
             else
-            {
-                Debug.Log("Fertility Check Failed ", this);
+            {                
                 if (targetMate != null)
                     targetMate.GetComponent<AI_Mating>().OnMateComplete();
                 OnMateComplete();
             }
         }
         else
-        {
-            Debug.Log("Mating Chance Check Failed ", this);
+        {            
             if (targetMate != null)
                 targetMate.GetComponent<AI_Mating>().OnMateComplete();
             OnMateComplete();

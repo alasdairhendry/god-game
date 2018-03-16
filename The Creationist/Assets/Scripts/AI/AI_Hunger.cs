@@ -20,9 +20,7 @@ public class AI_Hunger : AI {
     }
 
     public override float GetPriority()
-    {
-        Debug.Log("Hunger: " + entity.GetAttributes.FindAttributeByKey(Attribute.AttributeKey.hunger).FloatValue);
-        Debug.Log("Hunger Priority: " + Mathf.Lerp(1.0f, 0.0f, Mathf.InverseLerp(0.3f, 1.0f, entity.GetAttributes.FindAttributeByKey(Attribute.AttributeKey.hunger).FloatValue)));
+    {        
         return Mathf.Lerp(1.0f, 0.0f, Mathf.InverseLerp(0.3f, 1.0f, entity.GetAttributes.FindAttributeByKey(Attribute.AttributeKey.hunger).FloatValue));
     }
 

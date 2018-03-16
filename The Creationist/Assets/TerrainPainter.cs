@@ -71,20 +71,17 @@ public class TerrainPainter : MonoBehaviour {
 
     public void DrawGrasslands(Vector4 textureCoordinate)
     {
-        terrainPainterMaterialGrasslands.SetVector("_Coordinate", new Vector4(textureCoordinate.x, textureCoordinate.y, 0, 0));
-        Debug.Log("DrawGrasslands()");
+        terrainPainterMaterialGrasslands.SetVector("_Coordinate", new Vector4(textureCoordinate.x, textureCoordinate.y, 0, 0));        
     }
 
     public void DrawForest(Vector4 textureCoordinate)
     {
-        terrainPainterMaterialForest.SetVector("_Coordinate", new Vector4(textureCoordinate.x, textureCoordinate.y, 0, 0));
-        Debug.Log("DrawForest()");
+        terrainPainterMaterialForest.SetVector("_Coordinate", new Vector4(textureCoordinate.x, textureCoordinate.y, 0, 0));        
     }
 
     public void DrawTundra(Vector4 textureCoordinate)
     {
-        terrainPainterMaterialTundra.SetVector("_Coordinate", new Vector4(textureCoordinate.x, textureCoordinate.y, 0, 0));
-        Debug.Log("DrawTundra()");
+        terrainPainterMaterialTundra.SetVector("_Coordinate", new Vector4(textureCoordinate.x, textureCoordinate.y, 0, 0));        
     }
 
 }

@@ -10,8 +10,7 @@ public class UITabControl : MonoBehaviour {
 
     private void Start()
     {
-        UITabButton[] but = GetComponentsInChildren<UITabButton>();
-        //Debug.Log(but.Length);
+        UITabButton[] but = GetComponentsInChildren<UITabButton>();        
         foreach (UITabButton b in but)
         {
             tabButtons.Add(b);
@@ -22,8 +21,7 @@ public class UITabControl : MonoBehaviour {
     }
 
     private void OnEnable()
-    {
-        //Debug.Log("OnEnable");
+    {        
         if (tabButtons.Count <= 0) { return; }
 
         if (resetOnEnable)

@@ -78,8 +78,7 @@ public class EntityPool : MonoBehaviour {
         public void Preload()
         {
             for (int i = 0; i < preloadCount; i++)
-            {
-                //Debug.Log(resourcePath);
+            {                
                 GameObject go = Instantiate(Resources.Load(resourcePath)) as GameObject;
                 go.transform.parent = GameObject.Find("ObjectPool").transform;
                 pool.Enqueue(go);

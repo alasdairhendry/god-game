@@ -170,16 +170,14 @@ public class AI_Mating_Environment : AI_Mating {
                 }
             }
             else
-            {
-                Debug.Log("Fertility Check Failed ", this);
+            {                
                 if (targetMate != null)
                     targetMate.GetComponent<AI_Mating>().OnMateComplete();
                 OnMateComplete();
             }
         }
         else
-        {
-            Debug.Log("Mating Chance Check Failed ", this);
+        {            
             if (targetMate != null)
                 targetMate.GetComponent<AI_Mating>().OnMateComplete();
             OnMateComplete();

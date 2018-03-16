@@ -208,8 +208,7 @@ public class Entity : MonoBehaviour, IInspectable, IPoolable
     }
 
     void IInspectable.OnStopInspect()
-    {
-        Debug.Log("OnStopInspect", this);
+    {        
         if (GetComponentInChildren<Outline>() != null)
             GetComponentInChildren<Outline>().enabled = false;
     }
